@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import '../../flolfenstein_3d_game.dart';
 import '../../wall.dart';
 
+final _whitePaint = Paint()..color = Colors.white;
+final _greyPaint = Paint()..color = Colors.grey;
+
 class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
   TopView() : super(behaviors: [MovementBehavior()]);
 
@@ -207,13 +210,11 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
 
   @override
   void render(Canvas canvas) {
-    var whitePaint = Paint()..color = Colors.white;
-
     for (final wall in walls) {
       canvas.drawLine(
         wall.origin.toOffset() / 2,
         (wall.origin + wall.direction).toOffset() / 2,
-        whitePaint,
+        _whitePaint,
       );
     }
 
@@ -267,7 +268,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
         canvas.drawLine(
           gameRef.origin.toOffset() / 2,
           nearestIntersection.toOffset() / 2,
-          Paint()..color = Colors.grey,
+          _greyPaint,
         );
         if (nearestDistance <= 1000) {
           var dir = nearestIntersection - gameRef.origin;
