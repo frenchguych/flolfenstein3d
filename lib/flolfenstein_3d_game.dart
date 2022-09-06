@@ -35,14 +35,7 @@ class Flolfenstein3DGame extends FlameGame
     maxView = Vector2(size.x, size.y).length;
 
     await addAll([
-      TopView(
-        moveForward: LogicalKeyboardKey.keyW,
-        moveBackward: LogicalKeyboardKey.keyS,
-        turnLeft: LogicalKeyboardKey.keyA,
-        turnRight: LogicalKeyboardKey.keyD,
-        strafeLeft: LogicalKeyboardKey.arrowLeft,
-        strafeRight: LogicalKeyboardKey.arrowRight,
-      ),
+      TopView(),
       FpsTextComponent(
         position: Vector2(0, 0),
         anchor: Anchor.topLeft,

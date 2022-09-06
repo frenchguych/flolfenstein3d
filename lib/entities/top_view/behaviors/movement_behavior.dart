@@ -12,54 +12,52 @@ class MovementBehavior extends Behavior<TopView>
   var _rotationVelocity = 0.0;
   final _rotationSpeed = 150.0;
 
-  MovementBehavior(
-    LogicalKeyboardKey moveForward,
-    LogicalKeyboardKey moveBackward,
-    LogicalKeyboardKey turnLeft,
-    LogicalKeyboardKey turnRight,
-    LogicalKeyboardKey strafeLeft,
-    LogicalKeyboardKey strafeRight,
-  )   : _moveForward = moveForward,
-        _moveBackward = moveBackward,
-        _turnLeft = turnLeft,
-        _turnRight = turnRight,
-        _strafeLeft = strafeLeft,
-        _strafeRight = strafeRight;
-
-  final LogicalKeyboardKey _moveForward;
-  final LogicalKeyboardKey _moveBackward;
-  final LogicalKeyboardKey _turnLeft;
-  final LogicalKeyboardKey _turnRight;
-  final LogicalKeyboardKey _strafeLeft;
-  final LogicalKeyboardKey _strafeRight;
-
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    debugPrint("event: $event, keysPressed: $keysPressed");
+    debugPrint(
+      "alt left : ${keysPressed.contains(LogicalKeyboardKey.altLeft)}",
+    );
+    final bool isAltDown = keysPressed.contains(LogicalKeyboardKey.altLeft) ||
+        keysPressed.contains(LogicalKeyboardKey.altRight);
+
     _velocity.setZero();
     _rotationVelocity = 0.0;
-    if (keysPressed.contains(_moveForward) &&
-        !keysPressed.contains(_moveBackward)) {
+    /* Move forawrd */
+    if (keysPressed.contains(LogicalKeyboardKey.arrowUp) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
       _velocity.y = -_speed;
     }
-    if (keysPressed.contains(_moveBackward) &&
-        !keysPressed.contains(_moveForward)) {
-      _velocity.y = _speed / 2;
+    /* Move backward */
+    if (keysPressed.contains(LogicalKeyboardKey.arrowDown) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+      _velocity.y = _speed;
     }
-    if (keysPressed.contains(_strafeLeft) &&
-        !keysPressed.contains(_strafeRight)) {
-      _velocity.x = -_speed / 2;
+    /* Strafe left */
+    if (isAltDown &&
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+      _velocity.x = -_speed;
     }
-    if (keysPressed.contains(_strafeRight) &&
-        !keysPressed.contains(_strafeLeft)) {
-      _velocity.x = _speed / 2;
+    /* Strafe right */
+    if (isAltDown &&
+        keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+      _velocity.x = _speed;
     }
-    if (keysPressed.contains(_turnRight) && !keysPressed.contains(_turnLeft)) {
-      _rotationVelocity = _rotationSpeed;
-    }
-    if (keysPressed.contains(_turnLeft) && !keysPressed.contains(_turnRight)) {
+    /* Turn left */
+    if (!isAltDown &&
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
       _rotationVelocity = -_rotationSpeed;
     }
-    return super.onKeyEvent(event, keysPressed);
+    /* Turn right */
+    if (!isAltDown &&
+        keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
+        !keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+      _rotationVelocity = _rotationSpeed;
+    }
+    return false;
   }
 
   @override

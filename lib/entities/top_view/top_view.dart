@@ -4,22 +4,11 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../flolfenstein_3d_game.dart';
 
 class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
-  TopView({
-    required LogicalKeyboardKey moveForward,
-    required LogicalKeyboardKey moveBackward,
-    required LogicalKeyboardKey turnLeft,
-    required LogicalKeyboardKey turnRight,
-    required LogicalKeyboardKey strafeLeft,
-    required LogicalKeyboardKey strafeRight,
-  }) : super(behaviors: [
-          MovementBehavior(moveForward, moveBackward, turnLeft, turnRight,
-              strafeLeft, strafeRight)
-        ]);
+  TopView() : super(behaviors: [MovementBehavior()]);
 
   var walls = <Wall>[];
 
