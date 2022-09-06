@@ -2,22 +2,17 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/top_view.dart';
 import 'package:flolfenstein3d/flolfenstein_3d_game.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MovementBehavior extends Behavior<TopView>
     with HasGameRef<Flolfenstein3DGame>, KeyboardHandler {
   final Vector2 _velocity = Vector2.zero();
-  final _speed = 100.0;
+  final _speed = 150.0;
   var _rotationVelocity = 0.0;
   final _rotationSpeed = 150.0;
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    debugPrint("event: $event, keysPressed: $keysPressed");
-    debugPrint(
-      "alt left : ${keysPressed.contains(LogicalKeyboardKey.altLeft)}",
-    );
     final bool isAltDown = keysPressed.contains(LogicalKeyboardKey.altLeft) ||
         keysPressed.contains(LogicalKeyboardKey.altRight);
 
@@ -62,10 +57,6 @@ class MovementBehavior extends Behavior<TopView>
 
   @override
   void update(double dt) {
-    if (_rotationVelocity > 0.0 || _velocity.length > 0.0) {
-      debugPrint(
-          '_rotationVelocity: $_rotationVelocity, _velocity: $_velocity');
-    }
     gameRef.azimuth += _rotationVelocity * dt;
 
     /* 
