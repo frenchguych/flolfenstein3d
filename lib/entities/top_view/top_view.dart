@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:flutter/services.dart';
 
 import '../../flolfenstein_3d_game.dart';
 
