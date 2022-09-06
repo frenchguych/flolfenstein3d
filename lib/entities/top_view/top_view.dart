@@ -7,6 +7,7 @@ import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
 import 'package:flutter/material.dart';
 
 import '../../flolfenstein_3d_game.dart';
+import '../../wall.dart';
 
 class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
   TopView() : super(behaviors: [MovementBehavior()]);
@@ -16,12 +17,13 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
   @override
   Future<void>? onLoad() async {
     final imagesLoader = Images();
-    final ubuntuMate = Sprite(
-      await imagesLoader.load('ubuntu_mate.png'),
-    );
+    final ubuntuMate = Sprite(await imagesLoader.load('ubuntu_mate.png'));
+    final eagle = Sprite(await imagesLoader.load('eagle.png'));
     final ubuntuMateHalf = Sprite(
       await imagesLoader.load('ubuntu_mate_half.png'),
     );
+    final redBrick = Sprite(await imagesLoader.load('redbrick.png'));
+
     final size = gameRef.size;
     walls = [
       Wall(
@@ -32,17 +34,17 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
       Wall(
         origin: Vector2(200, 100),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(200, 300),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(200, 400),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(300, 400),
@@ -57,17 +59,17 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
       Wall(
         origin: Vector2(500, 400),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(600, 400),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(600, 200),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        sprite: redBrick,
       ),
       Wall(
         origin: Vector2(600, 100),
@@ -147,7 +149,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
       Wall(
         origin: Vector2(200, 100),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        sprite: eagle,
       ),
       Wall(
         origin: Vector2(300, 100),
@@ -162,7 +164,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
       Wall(
         origin: Vector2(500, 100),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        sprite: eagle,
       ),
       // ----------------------------------------
       ...List.generate(
@@ -218,7 +220,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
     //for (var i = -45; i < 45; i += 1) {
     for (var col = 0; col < gameRef.size.x; col += 1) {
       final i =
-          atan((gameRef.size.x * col / 799 - 400) / 400) / degrees2Radians;
+          atan((gameRef.size.x * col / 799 - 400) / 600) / degrees2Radians;
       final angle = (i + gameRef.azimuth) * degrees2Radians;
       final heading = Vector2(sin(angle), -cos(angle));
       final target = gameRef.origin + heading * gameRef.maxView;
@@ -271,9 +273,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
           var dir = nearestIntersection - gameRef.origin;
           dir.rotate(-gameRef.azimuth * degrees2Radians);
           var perpendicularDistance = dir.y.abs();
-          var c = 255 - (perpendicularDistance / 1000 * 255).toInt();
-          var color = Colors.white.withRed(c).withGreen(c).withBlue(c);
-          var length = 60 * gameRef.size.y / perpendicularDistance;
+          var length = 100 * gameRef.size.y / perpendicularDistance;
           var offset = (gameRef.size.y - length) / 2;
 
           nearestWall!.draw(canvas, nearestU, col, offset);
