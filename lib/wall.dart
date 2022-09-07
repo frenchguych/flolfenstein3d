@@ -14,7 +14,7 @@ class Wall {
   });
 
   void draw(Canvas canvas, double nearestU, int col, double offset) {
-    final spriteId = (nearestU * spriteSheet.columns).toInt();
+    final spriteId = (nearestU * 63).toInt();
     final sprite = spriteSheet.getSpriteById(spriteId);
     sprite.render(
       canvas,
