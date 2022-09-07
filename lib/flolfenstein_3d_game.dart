@@ -17,6 +17,7 @@ class Flolfenstein3DGame extends FlameGame
   var azimuth = 0.0;
 
   var walls = <Wall>[];
+  late TopView topView;
 
   @override
   Future<void> onLoad() async {
@@ -27,7 +28,7 @@ class Flolfenstein3DGame extends FlameGame
     maxView = Vector2(size.x, size.y).length;
 
     await addAll([
-      TopView(),
+      topView = TopView(),
       FpsTextComponent(
         position: Vector2(0, 0),
         anchor: Anchor.topLeft,
@@ -39,6 +40,11 @@ class Flolfenstein3DGame extends FlameGame
         ),
       )
     ]);
+
+    topView.showTopView = false;
+
+    // Wait until everything is loaded
+    await ready();
   }
 
   @override
@@ -49,5 +55,9 @@ class Flolfenstein3DGame extends FlameGame
   ) {
     super.onKeyEvent(event, keysPressed);
     return KeyEventResult.handled;
+  }
+
+  void toggleTopView() {
+    topView.showTopView = !topView.showTopView;
   }
 }

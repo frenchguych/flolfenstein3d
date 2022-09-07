@@ -4,6 +4,7 @@ import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
+import 'package:flolfenstein3d/entities/top_view/behaviors/top_view_toggler_behavior.dart';
 import 'package:flutter/material.dart';
 
 import '../../flolfenstein_3d_game.dart';
@@ -13,9 +14,10 @@ final _whitePaint = Paint()..color = Colors.white;
 final _greyPaint = Paint()..color = Colors.grey;
 
 class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
-  TopView() : super(behaviors: [MovementBehavior()]);
+  TopView() : super(behaviors: [MovementBehavior(), TopViewTogglerBehavior()]);
 
   var walls = <Wall>[];
+  var showTopView = false;
 
   @override
   Future<void>? onLoad() async {
@@ -210,15 +212,19 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
 
   @override
   void render(Canvas canvas) {
-    for (final wall in walls) {
-      canvas.drawLine(
-        wall.origin.toOffset() / 2,
-        (wall.origin + wall.direction).toOffset() / 2,
-        _whitePaint,
-      );
+    if (showTopView) {
+      canvas.save();
+      canvas.scale(.5);
+      for (final wall in walls) {
+        canvas.drawLine(
+          wall.origin.toOffset(),
+          (wall.origin + wall.direction).toOffset(),
+          _whitePaint,
+        );
+      }
+      canvas.restore();
     }
 
-    //for (var i = -45; i < 45; i += 1) {
     for (var col = 0; col < gameRef.size.x; col += 1) {
       final i =
           atan((gameRef.size.x * col / 799 - 400) / 600) / degrees2Radians;
@@ -265,11 +271,16 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
       }
 
       if (nearestIntersection != null) {
-        canvas.drawLine(
-          gameRef.origin.toOffset() / 2,
-          nearestIntersection.toOffset() / 2,
-          _greyPaint,
-        );
+        if (showTopView) {
+          canvas.save();
+          canvas.scale(.5);
+          canvas.drawLine(
+            gameRef.origin.toOffset(),
+            nearestIntersection.toOffset(),
+            _greyPaint,
+          );
+          canvas.restore();
+        }
         if (nearestDistance <= 1000) {
           var dir = nearestIntersection - gameRef.origin;
           dir.rotate(-gameRef.azimuth * degrees2Radians);
@@ -277,7 +288,15 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
           var length = 100 * gameRef.size.y / perpendicularDistance;
           var offset = (gameRef.size.y - length) / 2;
 
+          if (showTopView) {
+            canvas.save();
+            canvas.scale(.5);
+            canvas.translate(gameRef.size.x, 0);
+          }
           nearestWall!.draw(canvas, nearestU, col, offset);
+          if (showTopView) {
+            canvas.restore();
+          }
         }
       }
     }
