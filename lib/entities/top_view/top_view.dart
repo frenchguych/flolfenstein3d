@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
+import 'package:flame/sprite.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/top_view_toggler_behavior.dart';
@@ -22,154 +23,174 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
   @override
   Future<void>? onLoad() async {
     final imagesLoader = Images();
-    final ubuntuMate = Sprite(await imagesLoader.load('ubuntu_mate.png'));
-    final eagle = Sprite(await imagesLoader.load('eagle.png'));
-    final ubuntuMateHalf = Sprite(
-      await imagesLoader.load('ubuntu_mate_half.png'),
+
+    final ubuntuMateTexture = await imagesLoader.load('ubuntu_mate.png');
+    final ubuntuMateSpriteSheet = SpriteSheet(
+      image: ubuntuMateTexture,
+      srcSize: Vector2(1, ubuntuMateTexture.height.toDouble()),
     );
-    final redBrick = Sprite(await imagesLoader.load('redbrick.png'));
+
+    final eagleTexture = await imagesLoader.load('eagle.png');
+    final eagleSpriteSheet = SpriteSheet(
+      image: eagleTexture,
+      srcSize: Vector2(1, eagleTexture.height.toDouble()),
+    );
+
+    final unbuntuMateHelfTexture =
+        await imagesLoader.load('ubuntu_mate_half.png');
+    final ubuntuMateHalfSpriteSheet = SpriteSheet(
+      image: unbuntuMateHelfTexture,
+      srcSize: Vector2(1, unbuntuMateHelfTexture.height.toDouble()),
+    );
+
+    final redBrickTexture = await imagesLoader.load('redbrick.png');
+    final redBrickSpriteSheet = SpriteSheet(
+      image: redBrickTexture,
+      srcSize: Vector2(1, redBrickTexture.height.toDouble()),
+    );
 
     final size = gameRef.size;
+
     walls = [
       Wall(
         origin: Vector2(100, 100),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(200, 100),
         direction: Vector2(0, 100),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(200, 300),
         direction: Vector2(0, 100),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(200, 400),
         direction: Vector2(100, 0),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(300, 400),
         direction: Vector2(50, 0),
-        sprite: ubuntuMateHalf,
+        spriteSheet: ubuntuMateHalfSpriteSheet,
       ),
       Wall(
         origin: Vector2(450, 400),
         direction: Vector2(50, 0),
-        sprite: ubuntuMateHalf,
+        spriteSheet: ubuntuMateHalfSpriteSheet,
       ),
       Wall(
         origin: Vector2(500, 400),
         direction: Vector2(100, 0),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(600, 400),
         direction: Vector2(0, -100),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(600, 200),
         direction: Vector2(0, -100),
-        sprite: redBrick,
+        spriteSheet: redBrickSpriteSheet,
       ),
       Wall(
         origin: Vector2(600, 100),
         direction: Vector2(100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(700, 100),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(700, 200),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(700, 300),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(700, 400),
         direction: Vector2(0, 100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(700, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(600, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(500, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(400, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(300, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(200, 500),
         direction: Vector2(-100, 0),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(100, 500),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(100, 400),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(100, 300),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(100, 200),
         direction: Vector2(0, -100),
-        sprite: ubuntuMate,
+        spriteSheet: ubuntuMateSpriteSheet,
       ),
       Wall(
         origin: Vector2(200, 100),
         direction: Vector2(100, 0),
-        sprite: eagle,
+        spriteSheet: eagleSpriteSheet,
       ),
       Wall(
         origin: Vector2(300, 100),
         direction: Vector2(50, 0),
-        sprite: ubuntuMateHalf,
+        spriteSheet: ubuntuMateHalfSpriteSheet,
       ),
       Wall(
         origin: Vector2(450, 100),
         direction: Vector2(50, 0),
-        sprite: ubuntuMateHalf,
+        spriteSheet: ubuntuMateHalfSpriteSheet,
       ),
       Wall(
         origin: Vector2(500, 100),
         direction: Vector2(100, 0),
-        sprite: eagle,
+        spriteSheet: eagleSpriteSheet,
       ),
       // ----------------------------------------
       ...List.generate(
@@ -177,7 +198,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
         (index) => Wall(
           origin: Vector2(100.0 * index, 0),
           direction: Vector2(100, 0),
-          sprite: ubuntuMate,
+          spriteSheet: ubuntuMateSpriteSheet,
         ),
       ),
       // ----------------------------------------
@@ -186,7 +207,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
         (index) => Wall(
           origin: Vector2(gameRef.size.x, 100.0 * index),
           direction: Vector2(0, 100),
-          sprite: ubuntuMate,
+          spriteSheet: ubuntuMateSpriteSheet,
         ),
       ),
       // ----------------------------------------
@@ -195,7 +216,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
         (index) => Wall(
           origin: Vector2(0, 100.0 * index),
           direction: Vector2(0, 100),
-          sprite: ubuntuMate,
+          spriteSheet: ubuntuMateSpriteSheet,
         ),
       ),
       // ----------------------------------------
@@ -204,7 +225,7 @@ class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
         (index) => Wall(
           origin: Vector2(100.0 * index, size.y),
           direction: Vector2(100, 0),
-          sprite: ubuntuMate,
+          spriteSheet: ubuntuMateSpriteSheet,
         ),
       ),
     ];
