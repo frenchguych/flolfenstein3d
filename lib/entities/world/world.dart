@@ -25,39 +25,153 @@ class World extends Entity with HasGameRef<Flolfenstein3DGame> {
       srcSize: Vector2(65, 65),
     );
 
-    var blueWallTexture = await bigSpriteSheet.getSpriteById(14).toImage();
+    var blueWallTexture = await bigSpriteSheet.getSprite(0, 14).toImage();
+    var dorwayTexture = await bigSpriteSheet.getSprite(6, 4).toImage();
 
     var blueCellWithSkelletonTexture =
-        await bigSpriteSheet.getSpriteById(12).toImage();
+        await bigSpriteSheet.getSprite(0, 12).toImage();
+
+    /**
+     *   01234567890 1 2 3 4 5 6 7 8 9
+     * 0 XXXXXXXXXXX
+     * 1 X         X
+     * 2 X XXX XXX X
+     * 3 X X     X X
+     * 4 X         X
+     * 5 X X     X X
+     * 6 X X     X X
+     * 7 X XXX XXX X
+     * 8 X         X
+     * 9 XXXXXXXXXXX 
+     */
+
+    gameBlocks = GameBlocks.start(
+      GameBlock(x: 0, y: 0, walls: Walls.all(blueWallTexture)),
+    )
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .east(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .south(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .west(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .north(Walls.all(blueWallTexture))
+        .toList();
+
+    /**
+     *   01234567890 1 2 3 4 5 6 7 8 9
+     * 0 XXXXXXXXXXX
+     * 1 X         X
+     * 2 X XXX XXX X
+     * 3 X X     X X
+     * 4 X         X
+     * 5 X X     X X
+     * 6 X X     X X
+     * 7 X XXX XXX X
+     * 8 X         X
+     * 9 XXXXXXXXXXX 
+     */
 
     gameBlocks = [
-      GameBlock(
-          x: 0,
-          y: 1,
-          walls: Walls.fromNSEW(
-            west: blueWallTexture,
-            south: blueCellWithSkelletonTexture,
-            east: blueWallTexture,
-            north: blueWallTexture,
-          )),
-      GameBlock(
-          x: 1,
-          y: 1,
-          walls: Walls.fromNSEW(
-            west: blueWallTexture,
-            south: blueCellWithSkelletonTexture,
-            east: blueWallTexture,
-            north: blueWallTexture,
-          )),
-      GameBlock(
-          x: 2,
-          y: 1,
-          walls: Walls.fromNSEW(
-            west: blueWallTexture,
-            south: blueCellWithSkelletonTexture,
-            east: blueWallTexture,
-            north: blueWallTexture,
-          )),
+      ...gameBlocks,
+      ...GameBlocks.start(
+        GameBlock(x: 2, y: 2, walls: Walls.all(blueWallTexture)),
+      )
+          .east(Walls.all(blueWallTexture))
+          .east(Walls.fromNSEW(
+            northTexture: blueWallTexture,
+            eastTexture: dorwayTexture,
+            southTexture: blueWallTexture,
+            westTexture: blueWallTexture,
+          ))
+          .east(
+              Walls.fromNSEW(
+                northTexture: blueWallTexture,
+                eastTexture: blueWallTexture,
+                southTexture: blueWallTexture,
+                westTexture: dorwayTexture,
+              ),
+              skip: 1)
+          .east(Walls.all(blueWallTexture))
+          .east(Walls.all(blueWallTexture))
+          .south(Walls.fromNSEW(
+            northTexture: blueWallTexture,
+            eastTexture: blueWallTexture,
+            southTexture: dorwayTexture,
+            westTexture: blueWallTexture,
+          ))
+          .south(
+              Walls.fromNSEW(
+                northTexture: dorwayTexture,
+                eastTexture: blueWallTexture,
+                southTexture: blueWallTexture,
+                westTexture: blueWallTexture,
+              ),
+              skip: 1)
+          .south(Walls.all(blueWallTexture))
+          .south(Walls.all(blueWallTexture))
+          .west(Walls.all(blueWallTexture))
+          .west(Walls.fromNSEW(
+            northTexture: blueWallTexture,
+            eastTexture: blueWallTexture,
+            southTexture: blueWallTexture,
+            westTexture: dorwayTexture,
+          ))
+          .west(
+              Walls.fromNSEW(
+                northTexture: blueWallTexture,
+                eastTexture: dorwayTexture,
+                southTexture: blueWallTexture,
+                westTexture: blueWallTexture,
+              ),
+              skip: 1)
+          .west(Walls.all(blueWallTexture))
+          .west(Walls.all(blueWallTexture))
+          .north(Walls.all(blueWallTexture))
+          .north(Walls.fromNSEW(
+            northTexture: dorwayTexture,
+            eastTexture: blueWallTexture,
+            southTexture: blueWallTexture,
+            westTexture: blueWallTexture,
+          ))
+          .north(
+              Walls.fromNSEW(
+                northTexture: blueWallTexture,
+                eastTexture: blueWallTexture,
+                southTexture: dorwayTexture,
+                westTexture: blueWallTexture,
+              ),
+              skip: 1)
+          .toList(),
     ];
   }
 
@@ -81,7 +195,7 @@ class World extends Entity with HasGameRef<Flolfenstein3DGame> {
       Wall? nearestWall;
 
       for (final block in gameBlocks) {
-        for (final wall in block.walls) {
+        for (final wall in block.walls.toList()) {
           final x3 = (block.x + wall.origin.x) * 64;
           final y3 = (block.y + wall.origin.y) * 64;
           final x4 = (block.x + wall.origin.x + wall.direction.x) * 64;

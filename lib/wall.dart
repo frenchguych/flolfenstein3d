@@ -4,46 +4,71 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
 class Walls {
-  static List<Wall> all(Image image) {
+  Wall? north;
+  Wall? south;
+  Wall? east;
+  Wall? west;
+
+  Walls._();
+
+  static Walls all(Image texture) {
     return Walls.fromNSEW(
-      north: image,
-      south: image,
-      east: image,
-      west: image,
+      northTexture: texture,
+      southTexture: texture,
+      eastTexture: texture,
+      westTexture: texture,
     );
   }
 
-  static List<Wall> fromNSEW({
-    Image? north,
-    Image? south,
-    Image? east,
-    Image? west,
+  static Walls fromNSEW({
+    Image? northTexture,
+    Image? southTexture,
+    Image? eastTexture,
+    Image? westTexture,
   }) {
+    final walls = Walls._();
+
+    if (westTexture != null) {
+      walls.west = Wall(
+        origin: Vector2(0, 0),
+        direction: Vector2(0, 1),
+        spriteSheet: SpriteSheet(image: westTexture, srcSize: Vector2(1, 64)),
+      );
+    }
+
+    if (southTexture != null) {
+      walls.south = Wall(
+        origin: Vector2(0, 1),
+        direction: Vector2(1, 0),
+        spriteSheet: SpriteSheet(image: southTexture, srcSize: Vector2(1, 64)),
+      );
+    }
+
+    if (eastTexture != null) {
+      walls.east = Wall(
+        origin: Vector2(1, 1),
+        direction: Vector2(0, -1),
+        spriteSheet: SpriteSheet(image: eastTexture, srcSize: Vector2(1, 64)),
+      );
+    }
+
+    if (northTexture != null) {
+      walls.north = Wall(
+        origin: Vector2(1, 0),
+        direction: Vector2(-1, 0),
+        spriteSheet: SpriteSheet(image: northTexture, srcSize: Vector2(1, 64)),
+      );
+    }
+
+    return walls;
+  }
+
+  toList() {
     return [
-      if (west != null)
-        Wall(
-          origin: Vector2(0, 0),
-          direction: Vector2(0, 1),
-          spriteSheet: SpriteSheet(image: west, srcSize: Vector2(1, 64)),
-        ),
-      if (south != null)
-        Wall(
-          origin: Vector2(0, 1),
-          direction: Vector2(1, 0),
-          spriteSheet: SpriteSheet(image: south, srcSize: Vector2(1, 64)),
-        ),
-      if (east != null)
-        Wall(
-          origin: Vector2(1, 1),
-          direction: Vector2(0, -1),
-          spriteSheet: SpriteSheet(image: east, srcSize: Vector2(1, 64)),
-        ),
-      if (north != null)
-        Wall(
-          origin: Vector2(1, 0),
-          direction: Vector2(-1, 0),
-          spriteSheet: SpriteSheet(image: north, srcSize: Vector2(1, 64)),
-        ),
+      if (north != null) north,
+      if (south != null) south,
+      if (east != null) east,
+      if (west != null) west
     ];
   }
 }
