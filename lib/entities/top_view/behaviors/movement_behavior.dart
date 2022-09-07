@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flolfenstein3d/entities/top_view/top_view.dart';
+import 'package:flolfenstein3d/entities/entities.dart';
 import 'package:flolfenstein3d/flolfenstein_3d_game.dart';
 import 'package:flutter/services.dart';
 
-class MovementBehavior extends Behavior<TopView>
+class MovementBehavior extends Behavior<World>
     with HasGameRef<Flolfenstein3DGame>, KeyboardHandler {
   final Vector2 _velocity = Vector2.zero();
   final _speed = 150.0;

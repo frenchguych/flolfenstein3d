@@ -5,7 +5,6 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flolfenstein3d/entities/top_view/behaviors/behaviors.dart';
-import 'package:flolfenstein3d/entities/top_view/behaviors/top_view_toggler_behavior.dart';
 import 'package:flutter/material.dart';
 
 import '../../flolfenstein_3d_game.dart';
@@ -15,7 +14,7 @@ final _whitePaint = Paint()..color = Colors.white;
 final _greyPaint = Paint()..color = Colors.grey;
 
 class TopView extends Entity with HasGameRef<Flolfenstein3DGame> {
-  TopView() : super(behaviors: [MovementBehavior(), TopViewTogglerBehavior()]);
+  TopView() : super(behaviors: [MovementBehavior()]);
 
   var walls = <Wall>[];
   var showTopView = false;
