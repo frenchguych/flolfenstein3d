@@ -11,10 +11,10 @@ class Flolfenstein3DGame extends FlameGame
   @override
   Color backgroundColor() => const Color(0xff202020);
 
-  Vector2 origin = Vector2(96, 260);
+  Vector2 origin = Vector2(96, 96);
 
   var maxView = 1.0;
-  var azimuth = 0.0;
+  var azimuth = -90.0;
 
   var walls = <Wall>[];
   late World world;

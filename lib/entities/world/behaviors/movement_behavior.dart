@@ -44,13 +44,13 @@ class MovementBehavior extends Behavior<World>
     if (!isAltDown &&
         keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
         !keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      _rotationVelocity = -_rotationSpeed;
+      _rotationVelocity = _rotationSpeed;
     }
     /* Turn right */
     if (!isAltDown &&
         keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
         !keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      _rotationVelocity = _rotationSpeed;
+      _rotationVelocity = -_rotationSpeed;
     }
     return false;
   }
@@ -65,8 +65,11 @@ class MovementBehavior extends Behavior<World>
      * to rotate the velocity vector in place, we would end up with multiple 
      * rotations.
      */
-    final v = _velocity.clone();
-    v.rotate(gameRef.azimuth * degrees2Radians);
-    gameRef.origin += v * dt;
+    if (_velocity != Vector2.zero()) {
+      final v = _velocity.clone();
+      // CAUTION : Vector2.rotate rotates the vector clockwise.
+      v.rotate(-gameRef.azimuth * degrees2Radians);
+      gameRef.origin += v * dt;
+    }
   }
 }
